@@ -37,7 +37,7 @@ function findHighestBatteryJoltage(
 /**
  * Solution to [Advent of Code 2025 Day 3 Part 2](https://adventofcode.com/2025/day/3#part2)
  *
- * @param filePath path to the file containing the dial rotations
+ * @param filePath path to the file containing the banks of batteries
  * @returns The maximum output joltage
  */
 export async function day3(filePath: PathLike): Promise<number> {
