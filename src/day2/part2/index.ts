@@ -14,8 +14,8 @@ export async function day2(filePath: PathLike): Promise<number> {
     const [lower, higher] = range.split('-');
 
     return {
-      lowerBound: parseInt(lower!),
-      higherBound: parseInt(higher!),
+      lowerBound: parseInt(lower),
+      higherBound: parseInt(higher),
     };
   });
   let sum = 0;

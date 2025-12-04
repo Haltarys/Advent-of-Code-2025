@@ -23,7 +23,7 @@ export async function day3(filePath: PathLike): Promise<number> {
     let maximumJoltage = 0,
       maximumJoltageIndex = null;
     for (let i = 0; i < bank.length - 1; i++) {
-      const joltageLevel = bank[i]!;
+      const joltageLevel = bank[i];
 
       if (joltageLevel > maximumJoltage) {
         maximumJoltage = joltageLevel;
@@ -38,7 +38,7 @@ export async function day3(filePath: PathLike): Promise<number> {
     let maximumJoltage2 = 0,
       maximumJoltage2Index = null;
     for (let i = maximumJoltageIndex! + 1; i < bank.length; i++) {
-      const joltageLevel = bank[i]!;
+      const joltageLevel = bank[i];
 
       if (joltageLevel > maximumJoltage2) {
         maximumJoltage2 = joltageLevel;

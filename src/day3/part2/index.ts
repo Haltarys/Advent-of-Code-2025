@@ -14,7 +14,7 @@ function findHighestBatteryJoltage(
     maximumJoltageIndex = null;
   // Find the highest digit in the bank, as far as the `maxRange` value allows.
   for (let i = startIndex; i < bank.length - maxRange; i++) {
-    const joltageLevel = bank[i]!;
+    const joltageLevel = bank[i];
 
     if (joltageLevel > maximumJoltage) {
       maximumJoltage = joltageLevel;

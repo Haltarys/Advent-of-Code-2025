@@ -19,8 +19,8 @@ export async function day1(filePath: PathLike): Promise<number> {
     const match = line.match(/(?<direction>L|R)(?<amount>\d+)/);
 
     const rotation = {
-      direction: match!.groups!.direction!,
-      amount: parseInt(match!.groups!.amount!),
+      direction: match!.groups!.direction,
+      amount: parseInt(match!.groups!.amount),
     };
 
     if (rotation.direction === 'R') {
