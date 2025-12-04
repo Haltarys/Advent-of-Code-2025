@@ -52,15 +52,20 @@ export async function day4(filePath: PathLike): Promise<number> {
   let accessiblePaperRollsCount = 0;
 
   console.debug(grid);
+
+  // Go through each cell
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
       const cell = getGridCellContent(grid, y, x);
 
+      // If it's a paper roll, count the number of adjacent paper rolls.
       if (cell === PAPER_ROLL) {
         const count = countAdjacentPaperRolls(grid, y, x);
 
         console.debug(`Grid[${y}][${x}] = ${cell}, has ${count} adjacent paper rolls.`);
 
+        // Keep track of the total number of paper rolls that are accessible (less than `ADJACENT_PAPER_ROLLS_LIMIT`
+        // adjacent paper rolls).
         if (count < ADJACENT_PAPER_ROLLS_LIMIT) accessiblePaperRollsCount++;
       }
     }
