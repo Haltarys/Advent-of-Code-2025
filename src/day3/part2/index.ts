@@ -2,12 +2,12 @@ import { createReadStream, type PathLike } from 'fs';
 import { join } from 'path';
 import readline from 'readline/promises';
 
-function findHighestBatteryJoltage(bank: number[], startIndex: number, maxRange: number) {
+function findHighestBatteryJoltage(bank: number[], startIndex: number, maxRange: number): number {
   // Find the highest digit in the array, up to one step before the end of the array: since the joltage will be a
   // two digits number, even the lowest possible two-digits value (11) will be higher than the highest possible
   // single-digit value (9).
-  let maximumJoltage = 0,
-    maximumJoltageIndex = null;
+  let maximumJoltage = bank[startIndex] ?? 0,
+    maximumJoltageIndex = startIndex;
   for (let i = startIndex + 1; i < bank.length - maxRange; i++) {
     const joltageLevel = bank[i]!;
 
@@ -19,7 +19,13 @@ function findHighestBatteryJoltage(bank: number[], startIndex: number, maxRange:
 
   console.debug({ depth: maxRange, maximumJoltage, maximumJoltageIndex });
 
-  return { maximumJoltage, maximumJoltageIndex };
+  if (maxRange > 0) {
+    const res = findHighestBatteryJoltage(bank, maximumJoltageIndex! + 1, maxRange - 1);
+
+    return maximumJoltage * Math.pow(10, maxRange) + res;
+  } else {
+    return maximumJoltage;
+  }
 }
 
 /**
@@ -38,17 +44,7 @@ export async function day3(filePath: PathLike): Promise<number> {
     const bank = line.split('').map(Number);
     console.debug(bank);
 
-    let maximumJoltageIndex = -1;
-    for (let depth = 0; depth < DEPTH; depth++) {
-      const { maximumJoltage, maximumJoltageIndex: index } = findHighestBatteryJoltage(
-        bank,
-        maximumJoltageIndex,
-        DEPTH - 1 - depth
-      );
-
-      totalOutputJoltage += maximumJoltage * Math.pow(10, DEPTH - 1 - depth);
-      maximumJoltageIndex = index!;
-    }
+    totalOutputJoltage += findHighestBatteryJoltage(bank, -1, DEPTH - 1);
   }
 
   console.debug(`Total output joltage: ${totalOutputJoltage}`);
