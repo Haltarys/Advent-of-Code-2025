@@ -2,7 +2,14 @@ import { createReadStream, type PathLike } from 'fs';
 import { join } from 'path';
 import readline from 'readline/promises';
 
-function findHighestBatteryJoltage(bank: number[], startIndex: number, maxRange: number): number {
+function findHighestBatteryJoltage(
+  bank: number[],
+  startIndex: number,
+  maxRange: number,
+  accumulatedJoltage = 0
+): number {
+  if (maxRange < 0) return accumulatedJoltage;
+
   // Find the highest digit in the array, up to one step before the end of the array: since the joltage will be a
   // two digits number, even the lowest possible two-digits value (11) will be higher than the highest possible
   // single-digit value (9).
@@ -19,13 +26,12 @@ function findHighestBatteryJoltage(bank: number[], startIndex: number, maxRange:
 
   console.debug({ depth: maxRange, maximumJoltage, maximumJoltageIndex });
 
-  if (maxRange > 0) {
-    const res = findHighestBatteryJoltage(bank, maximumJoltageIndex! + 1, maxRange - 1);
-
-    return maximumJoltage * Math.pow(10, maxRange) + res;
-  } else {
-    return maximumJoltage;
-  }
+  return findHighestBatteryJoltage(
+    bank,
+    maximumJoltageIndex! + 1,
+    maxRange - 1,
+    maximumJoltage * Math.pow(10, maxRange) + accumulatedJoltage
+  );
 }
 
 /**
