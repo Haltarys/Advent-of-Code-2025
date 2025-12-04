@@ -1,4 +1,4 @@
-import { createReadStream, type ReadStream } from 'fs';
+import { createReadStream, type PathLike } from 'fs';
 import { join } from 'path';
 import readline from 'readline/promises';
 
@@ -8,8 +8,8 @@ import readline from 'readline/promises';
  * @param filePath path to the file containing the dial rotations
  * @returns The number of times the dial lands on 0
  */
-export async function day1(stream: ReadStream): Promise<number> {
-  const rl = readline.createInterface({ input: stream });
+export async function day1(filePath: PathLike): Promise<number> {
+  const rl = readline.createInterface({ input: createReadStream(filePath) });
 
   const MAX_DIAL_AMOUNT = 100;
   let dial = 50;
@@ -46,8 +46,8 @@ export async function day1(stream: ReadStream): Promise<number> {
 
 function main() {
   const filePath = join(process.cwd(), 'assets/day1/input.txt');
-  const stream = createReadStream(filePath);
-  day1(stream);
+
+  day1(filePath);
 }
 
 main();
