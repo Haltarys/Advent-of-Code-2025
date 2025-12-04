@@ -51,7 +51,7 @@ export async function day4(filePath: PathLike): Promise<number> {
   const ADJACENT_PAPER_ROLLS_LIMIT = 4;
   let accessiblePaperRollsCount = 0;
 
-  console.debug(grid);
+  console.debug(data);
 
   // Go through each cell
   for (let y = 0; y < grid.length; y++) {
