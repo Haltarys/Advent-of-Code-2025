@@ -29,15 +29,19 @@ export async function day1(stream: ReadStream): Promise<number> {
       zeroesCount += Math.floor(dial / MAX_DIAL_AMOUNT);
       dial %= MAX_DIAL_AMOUNT;
     } else if (rotation.direction === 'L') {
-      // Adding the `MAX_DIAL_AMOUNT` until the dial value is no longer negative to
-      // ensure it is always within bounds
+      // If the dial is already on 0, we need to decrement the count as it will be passed over in the wile loop below
+      if (dial === 0) zeroesCount--;
+
       dial = dial - rotation.amount;
 
-      if (dial === 0) zeroesCount++;
+      // Adding the `MAX_DIAL_AMOUNT` until the dial value is no longer negative to ensure it is always within bounds
       while (dial < 0) {
         zeroesCount++;
         dial += MAX_DIAL_AMOUNT;
       }
+
+      // If the dial lands exactly on 0, count that as well
+      if (dial === 0) zeroesCount++;
     }
 
     console.debug(`Rotation: ${rotation.direction}${rotation.amount}, dial: ${dial}`);
