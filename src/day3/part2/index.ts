@@ -10,12 +10,10 @@ function findHighestBatteryJoltage(
 ): number {
   if (maxRange < 0) return accumulatedJoltage;
 
-  // Find the highest digit in the array, up to one step before the end of the array: since the joltage will be a
-  // two digits number, even the lowest possible two-digits value (11) will be higher than the highest possible
-  // single-digit value (9).
-  let maximumJoltage = bank[startIndex] ?? 0,
-    maximumJoltageIndex = startIndex;
-  for (let i = startIndex + 1; i < bank.length - maxRange; i++) {
+  let maximumJoltage = 0,
+    maximumJoltageIndex = null;
+  // Find the highest digit in the bank, as far as the `maxRange` value allows.
+  for (let i = startIndex; i < bank.length - maxRange; i++) {
     const joltageLevel = bank[i]!;
 
     if (joltageLevel > maximumJoltage) {
@@ -26,11 +24,13 @@ function findHighestBatteryJoltage(
 
   console.debug({ depth: maxRange, maximumJoltage, maximumJoltageIndex });
 
+  // Return the sum of the maximum joltage found and the joltage accumulated so far, and search for the next highest
+  // digit to the right of the one that has been found.
   return findHighestBatteryJoltage(
     bank,
     maximumJoltageIndex! + 1,
     maxRange - 1,
-    maximumJoltage * Math.pow(10, maxRange) + accumulatedJoltage
+    accumulatedJoltage + maximumJoltage * Math.pow(10, maxRange)
   );
 }
 
@@ -48,9 +48,10 @@ export async function day3(filePath: PathLike): Promise<number> {
 
   for await (const line of rl) {
     const bank = line.split('').map(Number);
+
     console.debug(bank);
 
-    totalOutputJoltage += findHighestBatteryJoltage(bank, -1, DEPTH - 1);
+    totalOutputJoltage += findHighestBatteryJoltage(bank, 0, DEPTH - 1);
   }
 
   console.debug(`Total output joltage: ${totalOutputJoltage}`);
