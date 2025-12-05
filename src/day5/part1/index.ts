@@ -2,11 +2,6 @@ import { createReadStream, type PathLike } from 'fs';
 import { join } from 'path';
 import readline from 'readline/promises';
 
-type IngredientRange = {
-  lowerBound: number;
-  higherBound: number;
-};
-
 /**
  * Solution to [Advent of Code 2025 Day 5 Part 1](https://adventofcode.com/2025/day/5)
  *
@@ -17,14 +12,15 @@ export async function day5(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
   let freshIngredientIdsCount = 0;
 
-  const freshIngredientIdRanges: IngredientRange[] = [];
+  const freshIngredientIdRanges = [];
 
   // Read fresh ingredient id ranges until we hit an empty line
   for await (const line of rl) {
     if (line === '') break;
     const match = line.match(/(?<lower>\d+)-(?<higher>\d+)/);
 
-    // TODO: One could to merge and extend the ranges as they are added to avoid duplication and unnecessary checks
+    // TODO: One could merge and extend the ranges as they are added to avoid duplication and unnecessary checks
+    // (Actually done in part 2)
 
     // Add each fresh ingredient range to a list
     freshIngredientIdRanges.push({
