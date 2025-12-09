@@ -8,7 +8,7 @@ import { join } from 'path';
  * @param filePath path to the file containing the product ID ranges to check
  * @returns The sum of all invalid product IDs in the given ranges
  */
-export async function day2(filePath: PathLike): Promise<number> {
+export async function solveDay2Part2(filePath: PathLike): Promise<number> {
   const data = await readFile(filePath, 'utf-8');
   const ranges = data.split(',').map((range) => {
     const [lower, higher] = range.split('-');
@@ -40,9 +40,9 @@ export async function day2(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day2/input.txt');
 
-  day2(filePath);
+  solveDay2Part2(filePath);
 }
 
 main();
 
-export default day2;
+export default solveDay2Part2;

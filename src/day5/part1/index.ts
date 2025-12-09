@@ -8,7 +8,7 @@ import readline from 'readline/promises';
  * @param filePath path to the file containing the fresh ingredient ranges and the list of ingredients to test
  * @returns The number of fresh ingredients IDs
  */
-export async function day5(filePath: PathLike): Promise<number> {
+export async function solveDay5(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
   let freshIngredientIdsCount = 0;
 
@@ -54,9 +54,9 @@ export async function day5(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day5/input.txt');
 
-  day5(filePath);
+  solveDay5(filePath);
 }
 
 main();
 
-export default day5;
+export default solveDay5;

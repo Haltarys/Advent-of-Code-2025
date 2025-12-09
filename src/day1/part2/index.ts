@@ -8,7 +8,7 @@ import readline from 'readline/promises';
  * @param filePath path to the file containing the dial rotations
  * @returns The number of times the dial lands on or passes through 0
  */
-export async function day1(filePath: PathLike): Promise<number> {
+export async function solveDay1Part2(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
 
   const MAX_DIAL_AMOUNT = 100;
@@ -55,9 +55,9 @@ export async function day1(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day1/input.txt');
 
-  day1(filePath);
+  solveDay1Part2(filePath);
 }
 
 main();
 
-export default day1;
+export default solveDay1Part2;

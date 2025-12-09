@@ -8,7 +8,7 @@ import readline from 'readline/promises';
  * @param filePath path to the file containing the banks of batteries
  * @returns The maximum output joltage
  */
-export async function day3(filePath: PathLike): Promise<number> {
+export async function solveDay3(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
 
   let totalOutputJoltage = 0;
@@ -60,9 +60,9 @@ export async function day3(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day3/input.txt');
 
-  day3(filePath);
+  solveDay3(filePath);
 }
 
 main();
 
-export default day3;
+export default solveDay3;

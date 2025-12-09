@@ -196,7 +196,7 @@ function calculateDistanceSquared(a: JunctionBox, b: JunctionBox): number {
  * @param filePath path to the list of junction boxes coordinates
  * @returns The product of the sizes of the three largest circuits
  */
-export async function day8(filePath: PathLike): Promise<number> {
+export async function solveDay8(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
 
   const junctionBoxes: JunctionBox[] = [];
@@ -253,7 +253,9 @@ export async function day8(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day8/input.txt');
 
-  day8(filePath);
+  solveDay8(filePath);
 }
 
 main();
+
+export default solveDay8;

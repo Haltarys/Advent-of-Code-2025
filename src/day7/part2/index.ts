@@ -44,7 +44,7 @@ function computeTimelinesCount(
  * @param filePath path to the tachyon manifold diagram
  * @returns The number of different timelines a single tachyon will travel on
  */
-export async function day7(filePath: PathLike): Promise<number> {
+export async function solveDay7Part2(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
   const rows: string[] = [];
 
@@ -66,9 +66,9 @@ export async function day7(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day7/input.txt');
 
-  day7(filePath);
+  solveDay7Part2(filePath);
 }
 
 main();
 
-export default day7;
+export default solveDay7Part2;

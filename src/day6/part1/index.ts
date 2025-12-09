@@ -8,7 +8,7 @@ import readline from 'readline/promises';
  * @param filePath path to the math worksheet file
  * @returns The total sum of the worksheet's math problems
  */
-export async function day6(filePath: PathLike): Promise<number> {
+export async function solveDay6(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
 
   let operands: number[][] = [];
@@ -52,9 +52,9 @@ export async function day6(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day6/input.txt');
 
-  day6(filePath);
+  solveDay6(filePath);
 }
 
 main();
 
-export default day6;
+export default solveDay6;

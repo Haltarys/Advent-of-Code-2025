@@ -45,7 +45,7 @@ function countAdjacentPaperRolls(grid: Grid, row: number, col: number): number {
  * @param filePath path to the file containing the map of paper rolls
  * @returns The number of accessible paper rolls
  */
-export async function day4(filePath: PathLike): Promise<number> {
+export async function solveDay4(filePath: PathLike): Promise<number> {
   const data = await readFile(filePath, 'utf-8');
   const grid = data.split('\n').map((line) => line.split('')) as Grid;
   const ADJACENT_PAPER_ROLLS_LIMIT = 4;
@@ -78,9 +78,9 @@ export async function day4(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day4/input.txt');
 
-  day4(filePath);
+  solveDay4(filePath);
 }
 
 main();
 
-export default day4;
+export default solveDay4;

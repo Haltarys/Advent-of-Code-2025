@@ -8,7 +8,7 @@ import readline from 'readline/promises';
  * @param filePath path to the tachyon manifold diagram
  * @returns The number of times the beam was split
  */
-export async function day7(filePath: PathLike): Promise<number> {
+export async function solveDay7(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
 
   let previousRow = null;
@@ -55,9 +55,9 @@ export async function day7(filePath: PathLike): Promise<number> {
 function main() {
   const filePath = join(process.cwd(), 'assets/day7/input.txt');
 
-  day7(filePath);
+  solveDay7(filePath);
 }
 
 main();
 
-export default day7;
+export default solveDay7;
