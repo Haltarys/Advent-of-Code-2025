@@ -161,7 +161,7 @@ class UnionFind {
    * Time Complexity: O(n × α(n))
    * Space Complexity: O(n)
    */
-  getSets() {
+  getSets(): number[][] {
     // Map to group elements by their root
     const sets: Record<number, number[]> = {};
 
