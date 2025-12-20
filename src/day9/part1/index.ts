@@ -8,112 +8,6 @@ type Tile = {
 };
 
 /**
- * Calculates the euclidean distance between two points.
- *
- * @param a The first point
- * @param b The second point
- * @returns The euclidean distance between the two points
- */
-function calculateDistance(a: Tile, b: Tile) {
-  return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
-}
-
-/**
- * Calculates the area of a triangle given its three vertices.
- *
- * It uses the cross product method to compute the area: the area of the parallelogram is twice that of the triangle.
- *
- * @param a The first vertex of the triangle
- * @param b The second vertex of the triangle
- * @param c The third vertex of the triangle
- * @returns The area of the triangle
- */
-function calculateTriangleArea(a: Tile, b: Tile, c: Tile): number {
-  if (!a || !b || !c) {
-    console.debug(a, b, c);
-  }
-
-  return Math.abs(calculateCrossProduct(a, b, c)) / 2;
-}
-
-/**
- * Computes the two points furthest apart on a convex hull using the Rotating Calipers method.
- *
- * TODO: FIX THIS! IT DOES NOT WORK!
- *
- * Thanks to [this article](https://www.baeldung.com/cs/most-distant-pair-of-points#bd-3-convex-polygon-diameter).
- *
- * @param convexHull A list of points making up a convex hull
- * @returns An object representing the two points furthest apart and their distance
- */
-function computeFurthestPointsApartUsingRotatingCalipers(convexHull: Tile[]) {
-  // Get the number of points in the convex hull
-  const n = convexHull.length;
-
-  // Initialize k to find the first antipodal point pair convexHull[0] and convexHull[k]
-  // Start with k=1 and increment until we find the point that maximizes the triangle area
-  // formed by the first point, last point, and point k
-  let k = 1;
-  while (
-    calculateTriangleArea(convexHull[0], convexHull.at(-1)!, convexHull[k]) <
-    calculateTriangleArea(convexHull[0], convexHull.at(-1)!, convexHull[k + 1])
-  )
-    k++;
-
-  console.debug(
-    `Initial antipodal points: point 0 (${convexHull[0].x},${convexHull[0].y}), point ${k} (${convexHull[k].x},${convexHull[k].y})`
-  );
-
-  // Initialize variables to track the furthest pair of points
-  let i,
-    j,
-    distance = 0;
-
-  // Use the rotating calipers technique to find all antipodal pairs
-  // Iterate through each edge of the convex hull up to the antipodal point index by k (inclusive)
-  for (let p = 0, q = k; p <= k && q < n; p++) {
-    console.debug('batman');
-    // For each edge, rotate the caliper to find the furthest point from that edge
-    // The calipers rotate until the triangle area stops increasing
-    // This is done by comparing the area of the triangle formed by the edge (convexHull[p], convexHull[p + 1])
-    // and the current antipodal point (convexHull[q % n]) with the area of the triangle formed by the same edge
-    // and the next point (convexHull[(q + 1) % n])
-    //
-    // As long as the area increases, we keep rotating the caliper by advancing q.
-    // When the area stops increasing, we have found the furthest point for this edge.
-    while (
-      calculateTriangleArea(convexHull[p], convexHull[p + 1], convexHull[q % n]) <=
-      calculateTriangleArea(convexHull[p], convexHull[p + 1], convexHull[(q + 1) % n])
-    ) {
-      // Advance q to the next point on the hull
-      q++;
-
-      console.debug('hello');
-
-      // Calculate the distance between the current edge endpoint and the antipodal point
-      const currentDistance = calculateDistance(convexHull[p], convexHull[q % n]);
-
-      // Update the furthest pair if this distance is greater than the previous maximum
-      if (currentDistance > distance) {
-        i = p;
-        j = q % n;
-        distance = currentDistance;
-      }
-    }
-  }
-
-  const edge = { i, a: convexHull[i!], j, b: convexHull[j!], distance };
-
-  console.debug(
-    `Furthest points apart: point ${i} (${edge.a.x},${edge.a.y}), point ${j} (${edge.b.x},${
-      edge.b.y
-    }), distance: ${edge.distance.toFixed(2)}`
-  );
-
-  return edge;
-}
-
-/**
  * Calculate the cross product of two vectors, represented by three points.
  *
  * @param origin The origin point for the two vectors
@@ -261,9 +155,6 @@ function computeLargestArea(tiles: Tile[]) {
  */
 export async function solveDay9(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
-  const rl2 = ['7,1', '11,1', '11,7', '9,7', '9,5', '2,5', '2,3', '7,3'];
-  // Causes incorrect result with rotating calipers method
-  const rl3 = ['0,0', '4,0', '4,3', '3,5', '1, 7', '0,7', '2,2'];
 
   const tiles: Tile[] = [];
 
