@@ -13,7 +13,6 @@ type Segment = {
   left: number;
   right: number;
   direction?: 'horizontal' | 'vertical';
-  outsideArea?: 'left' | 'right' | 'above' | 'below';
 };
 
 type Rectangle = {
@@ -72,13 +71,17 @@ function isRectangleIntersected(rectangle: Rectangle, segments: Segment[]): bool
     /**
      * If the segment is in any of those configurations, it is not intersecting and we move on to the next one.
      *
-     *           |
+     *             ^
+     *             |
+     *             v
      *
-     *        +-----+
-     *  ---   |     |   ---
-     *        +-----+
+     *          +-----+
+     *  <--->   |     |   <--->
+     *          +-----+
      *
-     *           |
+     *             ^
+     *             |
+     *             v
      */
     if (segment.bottom <= rectangle.top) continue; // Segment is too high above rectangle
     if (segment.top >= rectangle.bottom) continue; // Segment is too far below rectangle
@@ -161,7 +164,6 @@ function findLargestInscribedRectangle(tiles: Tile[], segments: Segment[]): Rect
  */
 function computeSegments(tiles: Tile[]): Segment[] {
   const segments: Segment[] = [];
-  let leftmostVerticalSegmentIndex: number | undefined;
 
   // Iterate over every point, select it and the next one
   for (let i = 0; i < tiles.length; i++) {
@@ -181,100 +183,6 @@ function computeSegments(tiles: Tile[]): Segment[] {
     // In the given problem, segment cannot be diagonal
 
     segments.push(segment);
-
-    // Keep track of the leftmost vertical segment's index
-    if (
-      segment.direction === 'vertical' &&
-      (leftmostVerticalSegmentIndex === undefined ||
-        segment.left < segments[leftmostVerticalSegmentIndex].left)
-    )
-      leftmostVerticalSegmentIndex = segments.length - 1;
-  }
-
-  if (leftmostVerticalSegmentIndex !== undefined) {
-    // Initialize the outside area of the leftmost vertical segment to 'left'
-    segments[leftmostVerticalSegmentIndex].outsideArea = 'left';
-
-    for (
-      let i = leftmostVerticalSegmentIndex;
-      i < segments.length + leftmostVerticalSegmentIndex;
-      i++
-    ) {
-      // Select the current segment and the next one (wrapping around the array)
-      const segment = segments[i % segments.length],
-        nextSegment = segments[(i + 1) % segments.length];
-
-      /**
-       * There are 4 possible segment pair configurations:
-       *
-       * 1. Top left corner
-       *
-       * +---+
-       * |
-       * +
-       *
-       * 2. Top right corner
-       *
-       * +---+
-       *     |
-       *     +
-       *
-       * 3. Bottom left corner
-       *
-       * +
-       * |
-       * +---+
-       *
-       * 4. Bottom right corner
-       *
-       *     +
-       *     |
-       * +---+
-       *
-       * For each segment pair, the current and next segments could either be horizontal and vertical
-       * or vertical and horizontal.
-       * For the current segment, the outside area could either be above or below it if the segment if horizontal,
-       * or it could be either to its left or to its right if the segment is vertical.
-       */
-
-      if (segment.direction === 'horizontal' && nextSegment.direction === 'vertical') {
-        if (segment.top === nextSegment.top) {
-          if (segment.left === nextSegment.left) {
-            // Top left corner
-            nextSegment.outsideArea = segment.outsideArea === 'above' ? 'left' : 'right';
-          } else if (segment.right === nextSegment.right) {
-            // Top right corner
-            nextSegment.outsideArea = segment.outsideArea === 'above' ? 'right' : 'left';
-          }
-        } else if (segment.bottom === nextSegment.bottom) {
-          if (segment.left === nextSegment.left) {
-            // Bottom left corner
-            nextSegment.outsideArea = segment.outsideArea === 'above' ? 'right' : 'left';
-          } else if (segment.right === nextSegment.right) {
-            // Bottom right corner
-            nextSegment.outsideArea = segment.outsideArea === 'above' ? 'left' : 'right';
-          }
-        }
-      } else if (segment.direction === 'vertical' && nextSegment.direction === 'horizontal') {
-        if (segment.top === nextSegment.top) {
-          if (segment.left === nextSegment.left) {
-            // Top left corner
-            nextSegment.outsideArea = segment.outsideArea === 'left' ? 'above' : 'below';
-          } else if (segment.right === nextSegment.right) {
-            // Top right corner
-            nextSegment.outsideArea = segment.outsideArea === 'left' ? 'below' : 'above';
-          }
-        } else if (segment.bottom === nextSegment.bottom) {
-          if (segment.left === nextSegment.left) {
-            // Bottom left corner
-            nextSegment.outsideArea = segment.outsideArea === 'left' ? 'below' : 'above';
-          } else if (segment.right === nextSegment.right) {
-            // Bottom right corner
-            nextSegment.outsideArea = segment.outsideArea === 'left' ? 'above' : 'below';
-          }
-        }
-      }
-    }
   }
 
   return segments;
@@ -288,7 +196,6 @@ function computeSegments(tiles: Tile[]): Segment[] {
  */
 export async function solveDay9Part2(filePath: PathLike): Promise<number> {
   const rl = readline.createInterface({ input: createReadStream(filePath) });
-  // Causes incorrect result with rotating calipers method
 
   const tiles: Tile[] = [];
 
