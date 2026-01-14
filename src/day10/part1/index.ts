@@ -2,8 +2,13 @@ import { createReadStream, type PathLike } from 'fs';
 import { join } from 'path';
 import readline from 'readline/promises';
 
-type Lights = boolean[];
 type Button = number[];
+
+type MachineDiagram = {
+  lightDiagram: boolean[];
+  buttons: Button[];
+  joltageRequirements: number[];
+};
 
 /**
  * Checks whether a given array of indicator lights are all off or not.
@@ -11,18 +16,18 @@ type Button = number[];
  * boolean value is false.
  *
  * The trick is that, the right combination of buttons will turn all lights off, when starting
- * from the target configuration. If so, then that combination of buttons is a correct one.
+ * from the target configuration. If all lights are off, then whichever combination of buttons produced it is valid.
  *
  * @param lights Array of boolean values representing indicator lights
  * @returns true if all lights are off (all boolean values are false), false otherwise
  */
-function areAllLightsOff(lights: Lights): boolean {
+function areAllLightsOff(lights: boolean[]): boolean {
   return lights.every((light) => !light);
 }
 
 /**
  * Given some light indicators, some of which are turned on, some of which are turned off,
- * press each button given in sequence, which will toggle some lights on or off. The
+ * press each given button in sequence, which will toggle some lights on or off. The
  * altered configuration is returned.
  *
  * The original `lights` array is untouched.
@@ -32,9 +37,10 @@ function areAllLightsOff(lights: Lights): boolean {
  * each toggle one or several lights on or off. Each button is a list of indices of light indicators.
  * @returns The new configuration of lights after the buttons have been pressed.
  */
-function toggleLights(lights: Lights, buttons: Button[]) {
+function toggleLights(lights: boolean[], buttons: Button[]) {
   const newLights = Array.from(lights);
 
+  // Iterate through each button, and, for each button, toggle each of the light indicators it affects
   for (const button of buttons) {
     for (const i of button) newLights[i] = !newLights[i];
   }
@@ -43,11 +49,11 @@ function toggleLights(lights: Lights, buttons: Button[]) {
 }
 
 /**
- * Given an array of N buttons, recursively generates all the ways to pick K from the set
+ * Given an array of N buttons, recursively generates all the different ways to pick K buttons from the set
  * of N buttons, K varying from 0 to N inclusive.
  *
  * @param buttons Array of buttons (each button is a list indices of lights to toggle on or off)
- * @param acc Accumulator array. DO NOT PROVIDE A VALUE WHEN CALLING THIS FUNCTION!
+ * @param acc Accumulator array. DO NOT OVERRIDE THE DEFAULT VALUE OF THIS PARAMETER WHEN CALLING THE FUNCTION!
  */
 function* generateCombinations(buttons: Button[], acc: Button[] = []): Generator<Button[]> {
   // Base case check: if there are buttons remaining to process
@@ -87,8 +93,8 @@ function* generateCombinations(buttons: Button[], acc: Button[] = []): Generator
 }
 
 /**
- * Given a configuration of lights and a list of buttons, computes a combination of buttons
- * that, when pressed in sequence, will produce a configuration identical to the target configuration.
+ * Given a configuration of lights and a list of buttons, iterate through all combinations of buttons until it finds
+ * one that, when pressed in sequence, will produce a configuration identical to the target configuration.
  *
  * @param lights  The target configuration. Array of boolean values representing indicator lights.
  * @param buttons Array of array of numbers representing a list of buttons that will toggle one or several lights on or
@@ -96,7 +102,10 @@ function* generateCombinations(buttons: Button[], acc: Button[] = []): Generator
  * @returns The combination of buttons that, when pressed in sequence, will produce the target configuration. If no
  * such combination exists, returns undefined.
  */
-function computeCorrectButtonCombination(lights: Lights, buttons: Button[]): Button[] | undefined {
+function computeCorrectButtonCombination(
+  lights: boolean[],
+  buttons: Button[]
+): Button[] | undefined {
   for (const combination of generateCombinations(buttons)) {
     if (areAllLightsOff(toggleLights(lights, combination))) return combination;
   }
@@ -109,15 +118,11 @@ function computeCorrectButtonCombination(lights: Lights, buttons: Button[]): But
  * array), a list of buttons (array of array of light indicator indices), and some joltage requirements (array of
  * numbers, unused in this part of the challenge).
  *
- * @param line Line from the input file
- * @returns The parsed contents from the given line
+ * @param line Raw line to parse from the input file
+ * @returns The parsed contents from the given line as an object
  */
 function parseLine(line: string) {
-  const res: {
-    lightDiagram: boolean[];
-    buttons: number[][];
-    joltageRequirements: number[];
-  } = {
+  const res: MachineDiagram = {
     lightDiagram: [],
     buttons: [],
     joltageRequirements: [],
@@ -136,7 +141,7 @@ function parseLine(line: string) {
     } else if (element.startsWith('{') && element.endsWith('}')) {
       res.joltageRequirements = s.split(',').map(Number);
 
-      // (number,number...) in curly braces indicate the button switches
+      // (number,number...) in parenthesis indicate the button switches
     } else if (element.startsWith('(') && element.endsWith(')')) {
       res.buttons.push(s.split(',').map(Number));
     }
@@ -174,7 +179,7 @@ export async function solveDay10(filePath: PathLike): Promise<number> {
 
   console.debug(`Sum of lengths of correct combinations: ${sum}`);
 
-  return 0;
+  return sum;
 }
 
 function main() {
