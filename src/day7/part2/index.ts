@@ -4,9 +4,10 @@ import readline from 'readline/promises';
 
 function computeTimelinesCount(
   rows: string[],
-  rowIndex: number,
   beamIndex: number,
-  memo: Map<string, number>
+  rowIndex = 0,
+  // Map to memoise the result to improve performance
+  memo = new Map<string, number>()
 ): number {
   // Base case: reached the bottom of the diagram
   if (rowIndex >= rows.length) return 1;
@@ -24,13 +25,13 @@ function computeTimelinesCount(
   let res: number;
   // If we have reached a splitter, compute the number of paths to its left and to its right
   if (row[beamIndex] === '^') {
-    const leftPathTimelineCount = computeTimelinesCount(rows, rowIndex + 1, beamIndex - 1, memo);
-    const rightPathTimelineCount = computeTimelinesCount(rows, rowIndex + 1, beamIndex + 1, memo);
+    const leftPathTimelineCount = computeTimelinesCount(rows, beamIndex - 1, rowIndex + 1, memo);
+    const rightPathTimelineCount = computeTimelinesCount(rows, beamIndex + 1, rowIndex + 1, memo);
 
     res = leftPathTimelineCount + rightPathTimelineCount;
   } else {
     // Continue straight down
-    res = computeTimelinesCount(rows, rowIndex + 1, beamIndex, memo);
+    res = computeTimelinesCount(rows, beamIndex, rowIndex + 1, memo);
   }
 
   // Store result in memo before returning
@@ -54,9 +55,7 @@ export async function solveDay7Part2(filePath: PathLike): Promise<number> {
   // Find the starting position index of the tachyon beam
   const beamIndex = rows[0].indexOf('S')!;
 
-  // Map to memoise the result to improve performance
-  const memo = new Map<string, number>();
-  const timelineCount = computeTimelinesCount(rows, 0, beamIndex, memo);
+  const timelineCount = computeTimelinesCount(rows, beamIndex);
 
   console.debug(`A single tachyon will travel on ${timelineCount} different timelines.`);
 
