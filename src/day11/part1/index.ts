@@ -56,11 +56,11 @@ export async function solveDay11(filePath: PathLike): Promise<number> {
 
   const graph = await buildGraph(rl[Symbol.asyncIterator]());
 
-  const paths = computePathCount(graph, 'you', 'out');
+  const pathCount = computePathCount(graph, 'you', 'out');
 
-  console.log("Total number of paths from 'you' to 'out':", paths);
+  console.log("Total number of paths from 'you' to 'out':", pathCount);
 
-  return paths;
+  return pathCount;
 }
 
 function main() {
