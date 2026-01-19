@@ -40,7 +40,7 @@ function computeBestSolution(
   freeVariables: number[],
   constraints: number[],
   currentFreeVariableIndex = 0,
-  currentSolution = new Array(matrix[0].length - 1).fill(0)
+  currentSolution: number[] = new Array(matrix[0].length - 1).fill(0),
 ): Solution {
   // All free variables have been assigned some value
   if (currentFreeVariableIndex >= freeVariables.length) {
@@ -67,7 +67,7 @@ function computeBestSolution(
     const solution: Solution = {
       valid: noNegativeValues && noFractionalValues,
       // Copy array since it is shared between all invocations of this function
-      buttonCombination: new Array(...currentSolution),
+      buttonCombination: [...currentSolution],
       totalPresses: sum,
     };
 
@@ -92,7 +92,7 @@ function computeBestSolution(
       freeVariables,
       constraints,
       currentFreeVariableIndex + 1,
-      currentSolution
+      currentSolution,
     );
 
     // If the computed solution is valid and better than the best one found so far, keep it
@@ -115,7 +115,7 @@ function computeBestSolution(
  */
 function computeConstraints(joltageRequirements: number[], buttons: Button[]): number[] {
   return buttons.map((button) =>
-    Math.min(...button.map((requirementIndex) => joltageRequirements[requirementIndex]))
+    Math.min(...button.map((requirementIndex) => joltageRequirements[requirementIndex])),
   );
 }
 
