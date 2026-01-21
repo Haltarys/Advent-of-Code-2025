@@ -57,7 +57,7 @@ export async function solveDay7Part2(filePath: PathLike): Promise<number> {
 
   const timelineCount = computeTimelinesCount(rows, beamIndex);
 
-  console.debug(`A single tachyon will travel on ${timelineCount} different timelines.`);
+  console.log(`A single tachyon will travel on ${timelineCount} different timelines.`);
 
   return timelineCount;
 }

@@ -22,7 +22,7 @@ function findHighestBatteryJoltage(
     }
   }
 
-  console.debug({ depth: maxRange, maximumJoltage, maximumJoltageIndex });
+  console.log({ depth: maxRange, maximumJoltage, maximumJoltageIndex });
 
   // Return the sum of the maximum joltage found and the joltage accumulated so far, and search for the next highest
   // digit to the right of the one that has been found.
@@ -49,12 +49,12 @@ export async function solveDay3Part2(filePath: PathLike): Promise<number> {
   for await (const line of rl) {
     const bank = line.split('').map(Number);
 
-    console.debug(bank);
+    console.log(bank);
 
     totalOutputJoltage += findHighestBatteryJoltage(bank, 0, DEPTH - 1);
   }
 
-  console.debug(`Total output joltage: ${totalOutputJoltage}`);
+  console.log(`Total output joltage: ${totalOutputJoltage}`);
 
   return totalOutputJoltage;
 }

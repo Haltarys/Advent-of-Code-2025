@@ -237,7 +237,7 @@ export async function solveDay8Part2(filePath: PathLike): Promise<number> {
     junctionBoxes.push({ x, y, z });
   }
 
-  console.debug('Junction boxes:');
+  console.log('Junction boxes:');
   console.table(junctionBoxes);
 
   const edges: Distance[] = [];
@@ -254,7 +254,7 @@ export async function solveDay8Part2(filePath: PathLike): Promise<number> {
   // Sort the connexions in ascending order to get the junction boxes closest to each other first
   edges.sort((a, b) => a.distance - b.distance);
 
-  console.debug('Connexions:');
+  console.log('Connexions:');
   console.table(edges);
 
   // The UnionFind data structure helps keep track of the sets as they are being joined together
@@ -268,12 +268,12 @@ export async function solveDay8Part2(filePath: PathLike): Promise<number> {
     unionFind.union(edges[i].i, edges[i].j);
     i++;
   }
-  console.debug(`All junction boxes are connected after ${i} connexions.`);
+  console.log(`All junction boxes are connected after ${i} connexions.`);
 
   // Calculate the product of the X coordinates of the last connexion made
   const res = junctionBoxes[edges[i - 1].i].x * junctionBoxes[edges[i - 1].j].x;
 
-  console.debug(`Product of the X coordinates of the last connexion made: ${res}`);
+  console.log(`Product of the X coordinates of the last connexion made: ${res}`);
 
   return 0;
 }

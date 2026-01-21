@@ -54,9 +54,9 @@ export async function solveDay5Part2(filePath: PathLike): Promise<number> {
     0
   );
 
-  console.debug(ranges);
+  console.log(ranges);
 
-  console.debug(`Number of fresh ingredients: ${totalFreshIngredientIds}`);
+  console.log(`Number of fresh ingredients: ${totalFreshIngredientIds}`);
 
   return totalFreshIngredientIds;
 }

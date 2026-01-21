@@ -44,10 +44,10 @@ export async function solveDay1Part2(filePath: PathLike): Promise<number> {
       if (dial === 0) zeroesCount++;
     }
 
-    console.debug(`Rotation: ${rotation.direction}${rotation.amount}, dial: ${dial}`);
+    console.log(`Rotation: ${rotation.direction}${rotation.amount}, dial: ${dial}`);
   }
 
-  console.debug(`The dial landed on or passed through 0 ${zeroesCount} times.`);
+  console.log(`The dial landed on or passed through 0 ${zeroesCount} times.`);
 
   return zeroesCount;
 }

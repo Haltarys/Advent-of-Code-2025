@@ -208,7 +208,7 @@ export async function solveDay8(filePath: PathLike): Promise<number> {
     junctionBoxes.push({ x, y, z });
   }
 
-  console.debug('Junction boxes:');
+  console.log('Junction boxes:');
   console.table(junctionBoxes);
 
   const edges: Distance[] = [];
@@ -225,7 +225,7 @@ export async function solveDay8(filePath: PathLike): Promise<number> {
   // Sort the connexions in ascending order to get the junction boxes closest to each other first
   edges.sort((a, b) => a.distance - b.distance);
 
-  console.debug('Connexions:');
+  console.log('Connexions:');
   console.table(edges);
 
   // The UnionFind data structure helps keep track of the sets as they are being joined together
@@ -239,13 +239,13 @@ export async function solveDay8(filePath: PathLike): Promise<number> {
   const circuits = unionFind.getSets();
   circuits.sort((a, b) => b.length - a.length);
 
-  console.debug('Circuits:');
-  console.debug(circuits);
+  console.log('Circuits:');
+  console.log(circuits);
 
   // Calculate the product of the sizes of the three largest circuits
   const res = circuits[0].length * circuits[1].length * circuits[2].length;
 
-  console.debug(`Product of the sizes of the three largest circuits: ${res}`);
+  console.log(`Product of the sizes of the three largest circuits: ${res}`);
 
   return res;
 }

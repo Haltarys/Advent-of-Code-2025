@@ -51,7 +51,7 @@ export async function solveDay4(filePath: PathLike): Promise<number> {
   const ADJACENT_PAPER_ROLLS_LIMIT = 4;
   let accessiblePaperRollsCount = 0;
 
-  console.debug(data);
+  console.log(data);
 
   // Go through each cell
   for (let y = 0; y < grid.length; y++) {
@@ -62,7 +62,7 @@ export async function solveDay4(filePath: PathLike): Promise<number> {
       if (cell === PAPER_ROLL) {
         const count = countAdjacentPaperRolls(grid, y, x);
 
-        console.debug(`Grid[${y}][${x}] = ${cell}, has ${count} adjacent paper rolls.`);
+        console.log(`Grid[${y}][${x}] = ${cell}, has ${count} adjacent paper rolls.`);
 
         // Keep track of the total number of paper rolls that are accessible (less than `ADJACENT_PAPER_ROLLS_LIMIT`
         // adjacent paper rolls).
@@ -71,7 +71,7 @@ export async function solveDay4(filePath: PathLike): Promise<number> {
     }
   }
 
-  console.debug(`Total number of paper rolls accessible: ${accessiblePaperRollsCount}`);
+  console.log(`Total number of paper rolls accessible: ${accessiblePaperRollsCount}`);
   return accessiblePaperRollsCount;
 }
 

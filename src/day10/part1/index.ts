@@ -164,20 +164,20 @@ export async function solveDay10(filePath: PathLike): Promise<number> {
   for await (const line of rl) {
     const { lightDiagram, buttons } = parseLine(line);
 
-    console.debug(`Lights:`, lightDiagram);
-    console.debug(`Buttons: (${buttons.join(') (')})`);
+    console.log(`Lights:`, lightDiagram);
+    console.log(`Buttons: (${buttons.join(') (')})`);
 
     // Compute the correct combination of buttons to turn off all lights
     const combination = computeCorrectButtonCombination(lightDiagram, buttons);
 
     if (combination) sum += combination.length;
 
-    console.debug(`Combination (${combination?.length ?? 0} buttons long):`);
-    console.debug(combination);
-    console.debug();
+    console.log(`Combination (${combination?.length ?? 0} buttons long):`);
+    console.log(combination);
+    console.log();
   }
 
-  console.debug(`Sum of lengths of correct combinations: ${sum}`);
+  console.log(`Sum of lengths of correct combinations: ${sum}`);
 
   return sum;
 }

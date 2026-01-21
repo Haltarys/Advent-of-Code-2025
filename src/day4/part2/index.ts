@@ -51,7 +51,7 @@ export async function solveDay4Part2(filePath: PathLike): Promise<number> {
   const ADJACENT_PAPER_ROLLS_LIMIT = 4;
   let removedPaperRollsCount = 0;
 
-  console.debug(data);
+  console.log(data);
 
   let canRemovePaperRolls = true;
   while (canRemovePaperRolls) {
@@ -68,7 +68,7 @@ export async function solveDay4Part2(filePath: PathLike): Promise<number> {
         if (cell === PAPER_ROLL) {
           const count = countAdjacentPaperRolls(grid, y, x);
 
-          console.debug(`Grid[${y}][${x}] = ${cell}, has ${count} adjacent paper rolls.`);
+          console.log(`Grid[${y}][${x}] = ${cell}, has ${count} adjacent paper rolls.`);
 
           // If it is accessible, remove it, keep track of the total number of removed paper rolls, and confirm that
           // we have remove at least one paper roll for this iteration of the while loop
@@ -82,7 +82,7 @@ export async function solveDay4Part2(filePath: PathLike): Promise<number> {
     }
   }
 
-  console.debug(`Total number of paper rolls removed: ${removedPaperRollsCount}`);
+  console.log(`Total number of paper rolls removed: ${removedPaperRollsCount}`);
   return removedPaperRollsCount;
 }
 

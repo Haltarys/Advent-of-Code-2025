@@ -206,22 +206,22 @@ export async function solveDay9Part2(filePath: PathLike): Promise<number> {
     tiles.push({ x, y });
   }
 
-  console.debug('Tiles:');
+  console.log('Tiles:');
   console.table(tiles);
 
   const segments = computeSegments(tiles);
 
-  console.debug('Segments:');
+  console.log('Segments:');
   console.table(segments);
 
   const rectangle = findLargestInscribedRectangle(tiles, segments);
   const area = calculateRectangleArea(rectangle);
 
-  console.debug(
+  console.log(
     `Largest rectangle inscribed in the polygon: (${rectangle.left},${rectangle.top}) (${rectangle.right},${rectangle.bottom})`
   );
 
-  console.debug(`Area: ${area}`);
+  console.log(`Area: ${area}`);
 
   return area;
 }

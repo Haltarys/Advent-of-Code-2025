@@ -29,7 +29,7 @@ export async function solveDay5(filePath: PathLike): Promise<number> {
     });
   }
 
-  console.debug(freshIngredientIdRanges);
+  console.log(freshIngredientIdRanges);
 
   // Read each ingredient id to check if it falls within some range of fresh ingredient IDs
   for await (const line of rl) {
@@ -43,10 +43,10 @@ export async function solveDay5(filePath: PathLike): Promise<number> {
     )
       freshIngredientIdsCount++;
 
-    console.debug(ingredientId);
+    console.log(ingredientId);
   }
 
-  console.debug(`Number of fresh ingredients: ${freshIngredientIdsCount}`);
+  console.log(`Number of fresh ingredients: ${freshIngredientIdsCount}`);
 
   return freshIngredientIdsCount;
 }

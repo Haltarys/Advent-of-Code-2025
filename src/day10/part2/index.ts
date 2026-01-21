@@ -374,36 +374,36 @@ function findOptimalButtonCombination(joltageRequirements: number[], buttons: Bu
   // Each joltage requirement represents an equation (specifically, the constant, target value of that equation)
   const matrix: number[][] = buildAugmentedMatrix(joltageRequirements, buttons);
 
-  console.debug('Augmented matrix:');
+  console.log('Augmented matrix:');
   console.table(matrix);
-  console.debug();
+  console.log();
 
   // Transform the matrix to row echelon form, and note the pivot variables and the free variables
   const pivotColumns = convertToRowEchelonForm(matrix);
   const freeVariables = findFreeVariables(numVars, pivotColumns);
 
-  console.debug('Reduced row echelon form matrix:');
+  console.log('Reduced row echelon form matrix:');
   console.table(matrix);
-  console.debug();
+  console.log();
 
-  console.debug('Pivot columns:', pivotColumns);
-  console.debug('Free variables:', freeVariables);
-  console.debug();
+  console.log('Pivot columns:', pivotColumns);
+  console.log('Free variables:', freeVariables);
+  console.log();
 
   // Determine the additional constraints (upper bounds) for the parameters of the system
   const constraints = computeConstraints(joltageRequirements, buttons);
 
-  console.debug('Constraints:', constraints);
-  console.debug();
+  console.log('Constraints:', constraints);
+  console.log();
 
   // Solve the system given the matrix in row echelon form, the free and the pivot variables, and the constraints
   const solution = computeBestSolution(matrix, pivotColumns, freeVariables, constraints, 0);
 
-  console.debug('Solution:');
+  console.log('Solution:');
   console.table(solution);
 
-  console.debug('Total number of button presses:', solution.totalPresses);
-  console.debug();
+  console.log('Total number of button presses:', solution.totalPresses);
+  console.log();
 
   return solution;
 }
@@ -460,8 +460,8 @@ export async function solveDay10Part2(filePath: PathLike): Promise<number> {
   for await (const line of rl) {
     const { joltageRequirements, buttons } = parseLine(line);
 
-    console.debug(`Joltage requirements: {${joltageRequirements.join(',')}}`);
-    console.debug(`Buttons: (${buttons.join(') (')})\n`);
+    console.log(`Joltage requirements: {${joltageRequirements.join(',')}}`);
+    console.log(`Buttons: (${buttons.join(') (')})\n`);
 
     // Compute the correct combination of buttons to meet the joltage requirements
     const solution = findOptimalButtonCombination(joltageRequirements, buttons);
@@ -469,7 +469,7 @@ export async function solveDay10Part2(filePath: PathLike): Promise<number> {
     sum += solution.totalPresses;
   }
 
-  console.debug(`Sum of lengths of correct combinations:`, sum);
+  console.log(`Sum of lengths of correct combinations:`, sum);
 
   return sum;
 }

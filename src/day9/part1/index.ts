@@ -165,19 +165,19 @@ export async function solveDay9(filePath: PathLike): Promise<number> {
     tiles.push({ x, y });
   }
 
-  console.debug('Tiles:');
+  console.log('Tiles:');
   console.table(tiles);
 
   // Compute the convex hull of the red tiles: we know that the tiles forming the rectangle with the largest area
   // must be part of the convex hull.
   const convexHull = computeConvexHull(tiles);
 
-  console.debug('Convex hull:');
+  console.log('Convex hull:');
   console.table(convexHull);
 
   const area = computeLargestArea(convexHull);
 
-  console.info(`Largest rectangular area that can be delimited by red tiles: ${area}`);
+  console.log(`Largest rectangular area that can be delimited by red tiles: ${area}`);
 
   return area;
 }

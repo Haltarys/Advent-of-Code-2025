@@ -15,7 +15,7 @@ export async function solveDay3(filePath: PathLike): Promise<number> {
 
   for await (const line of rl) {
     const bank = line.split('').map(Number);
-    console.debug(bank);
+    console.log(bank);
 
     // Find the highest digit in the array, up to one step before the end of the array: since the joltage will be a
     // two digits number, even the lowest possible two-digits value (11) will be higher than the highest possible
@@ -31,7 +31,7 @@ export async function solveDay3(filePath: PathLike): Promise<number> {
       }
     }
 
-    console.debug({ maximumJoltage, maximumJoltageIndex });
+    console.log({ maximumJoltage, maximumJoltageIndex });
 
     // Once the highest digit has been found, search for the highest digit to its right
     // (Technically, we don't need the index here, but I kept it for debugging purposes)
@@ -46,13 +46,13 @@ export async function solveDay3(filePath: PathLike): Promise<number> {
       }
     }
 
-    console.debug({ maximumJoltage2, maximumJoltage2Index });
+    console.log({ maximumJoltage2, maximumJoltage2Index });
 
     // Multiply by 10 the highest digit because it represent the dozens in the bank's joltage value
     totalOutputJoltage += maximumJoltage * 10 + maximumJoltage2;
   }
 
-  console.debug(`Total output joltage: ${totalOutputJoltage}`);
+  console.log(`Total output joltage: ${totalOutputJoltage}`);
 
   return totalOutputJoltage;
 }

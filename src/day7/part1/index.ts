@@ -19,7 +19,7 @@ export async function solveDay7(filePath: PathLike): Promise<number> {
     if (!previousRow) {
       previousRow = line;
 
-      console.debug(previousRow);
+      console.log(previousRow);
 
       continue;
     }
@@ -44,10 +44,10 @@ export async function solveDay7(filePath: PathLike): Promise<number> {
     // output cleaner
     previousRow = row.join('');
 
-    console.debug(previousRow);
+    console.log(previousRow);
   }
 
-  console.debug(`The beam has been split ${splitCounter} times.`);
+  console.log(`The beam has been split ${splitCounter} times.`);
 
   return splitCounter;
 }

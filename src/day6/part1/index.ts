@@ -32,7 +32,7 @@ export async function solveDay6(filePath: PathLike): Promise<number> {
         if (operator === '*') total += operands[i].reduce((acc, n) => acc * n, 1);
       }
 
-      console.debug(`Total sum of the worksheet's math problems: ${total}`);
+      console.log(`Total sum of the worksheet's math problems: ${total}`);
 
       return total;
     }

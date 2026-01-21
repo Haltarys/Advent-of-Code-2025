@@ -59,7 +59,7 @@ export async function solveDay6Part2(filePath: PathLike): Promise<number> {
     }
   }
 
-  console.debug(`Total sum of the worksheet's math problems: ${total}`);
+  console.log(`Total sum of the worksheet's math problems: ${total}`);
 
   return total;
 }

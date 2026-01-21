@@ -26,13 +26,13 @@ export async function solveDay2Part2(filePath: PathLike): Promise<number> {
       const repeatedSequenceDetected = regexp.test(String(i));
 
       if (repeatedSequenceDetected) {
-        console.debug(`Invalid product ID: ${i}`);
+        console.log(`Invalid product ID: ${i}`);
         sum += i;
       }
     }
   });
 
-  console.debug(`Sum of invalid product IDs: ${sum}`);
+  console.log(`Sum of invalid product IDs: ${sum}`);
 
   return sum;
 }

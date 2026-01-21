@@ -34,12 +34,12 @@ export async function solveDay1(filePath: PathLike): Promise<number> {
       while (dial < 0) dial += MAX_DIAL_AMOUNT;
     }
 
-    console.debug(`Rotation: ${rotation.direction}${rotation.amount}, dial: ${dial}`);
+    console.log(`Rotation: ${rotation.direction}${rotation.amount}, dial: ${dial}`);
 
     if (dial === 0) zeroesCount++;
   }
 
-  console.debug(`The dial landed on 0 ${zeroesCount} times.`);
+  console.log(`The dial landed on 0 ${zeroesCount} times.`);
 
   return zeroesCount;
 }
